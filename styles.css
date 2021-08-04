@@ -1,0 +1,237 @@
+/* COLOUR PALETTE  #e5c2c0 #8fd5a6 #329f5b #0c8346 #0d5d56 */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
+body {
+	background-image: linear-gradient(to bottom right, #0c8346, #0d5d56);
+	color: white;
+	font-family: 'DM Sans', sans-serif;
+}
+
+div#content, nav#navBar {
+	display: flex;
+	min-height: 90vh;
+}
+
+nav#navBar {
+	width: 25%;
+}
+
+#navBar > ul {
+	width: 100%;
+}
+
+ul {
+	background-color: #0d5d56;
+	box-shadow: 14px 10px 116px 0px rgba(255,255,255,0.75);
+	-webkit-box-shadow: 14px 10px 116px 0px rgba(255,255,255,0.75);
+	-moz-box-shadow: 14px 10px 116px 0px rgba(255,255,255,0.75);
+	border-radius: 0% 3%;
+	display: inline-flex;
+	flex-direction: column;
+	margin: 0 auto;
+	padding: 5px;
+	width: 40%;
+}
+
+li.hideForm {
+	padding: 0 !important;
+}
+
+li.projContainer, li.taskContainer, li#newTaskContainer, li#addContainer {
+	background-image: linear-gradient(to bottom right, #0c8346, #0d5d56);
+	border-radius: 0 15px;
+	display: inline-flex;
+	flex-direction: column;
+	margin-bottom: 5px;
+	padding: 5px 5px 10px 5px;
+	text-shadow: 1px 1px 1px darkgreen;
+}
+
+li#addContainer.hideForm:hover, li.projContainer:hover, li.projContainer.selected, li#newTaskContainer.hideForm:hover {
+	background-image: linear-gradient(to bottom right, #66ee55, #0d5d56);
+}
+
+li.projContainer h3 {
+	cursor: pointer;
+}
+
+input {
+	background-color: transparent;
+	border-color: white;
+	border-width: 1px;
+	border-style: none none solid none;
+	color: white;
+}
+
+li.projContainer {
+	flex-direction: row !important;
+}
+
+li.projContainer > h3 {
+	display: inline;
+}
+
+.delProjBtn {
+	display: inline;
+}
+
+.hidden {
+	display: none;
+}
+
+/* Tasks list items */
+
+h2 {
+	margin: 0 auto;
+}
+
+li#listHeader {
+	background-image: none;
+	font-size: 8pt;
+	letter-spacing: 6px;
+	list-style-type: none;
+	margin: 0 0 5px 0;
+	padding: 0;
+	text-shadow: 1px 1px 1px #222222;
+}
+
+p {
+	margin: 0 0 0 32px;
+}
+
+#taskHeader {
+	border-bottom: 2px solid #329f5b;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 10px;
+	padding-bottom: 2px;
+}
+
+div#taskHeader > input {
+	margin: 5px 5px 0 7px;
+}
+
+div#taskHeader > label, li.projContainer > h3 {
+	font-weight: bold;
+	font-size: 11pt;
+	margin: 3px 0 3px 7px;
+	width: 87%;
+}
+
+span#dueDate {
+	font-weight: bold;
+	font-size: 11pt;
+	line-height: 20pt;
+	margin-right: 7px;
+}
+
+button#moreButton {
+	font-size: 13pt;
+	margin-bottom: 3px;
+}
+
+li.taskContainer.medium {
+	background-image: linear-gradient(to bottom right, #22bb55, #0d5d56);
+}
+
+li.taskContainer.medium > div#taskHeader {
+	border-color: #55cc77;
+}
+
+li.taskContainer.high {
+	background-image: linear-gradient(to bottom right, #66ee55, #0d5d56);
+}
+
+li.high > div#taskHeader {
+	border-color: #88ff88;
+}
+
+.completedTask {
+	background-image: linear-gradient(to bottom right, #555555, #0d5d56) !important;
+	color: #aaa;
+	padding-bottom: 5px;
+	text-decoration: line-through;
+	text-shadow: 1px 1px 1px #333333;
+}
+
+.completedTask > div#taskHeader {
+	border: none;
+	margin-bottom: 0;
+}
+
+.completedTask > p {
+	display: none;
+}
+
+#delTaskButton, #moreButton, button.delProjBtn {
+	background-color: transparent;
+	border-style: none;
+	color: white;
+	font-size: 11pt;
+	font-weight: bold;
+	text-decoration-color: transparent;
+	width: 5%;
+}
+
+.checklist p {
+	display: inline;
+	margin-left: 0;
+}
+
+.completedCheck p {
+	text-decoration: line-through;
+}
+
+/* Add task section */
+
+#formContainer:not(.hidden) {
+	display: flex;
+	flex-direction: column;
+}
+
+label.newTaskElements {
+	font-size: 10pt;
+	font-weight: 400;
+	margin: 3px;
+	text-transform: capitalize;
+}
+
+input.newTaskElements {
+	margin-left: 15px;
+}
+
+label.newTaskPriorities {
+	display: inline;
+	font-size: 8px;
+	margin-left: 15px;
+}
+
+input.newTaskPriorities {
+	margin-left: 2px;
+}
+
+#addBtn {
+	width: 50%;
+}
+
+#cancelBtn {
+	width: 20%;
+}
+
+button#openFormBtn, button#openProjForm {
+	background-color: transparent;
+	border-style: none;
+	color: white;
+	font-size: 20pt;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px #333333;
+}
+
+#formChecklistContainer {
+	border: none;
+}
+
+#formChecklistContainer	li > input {
+	width: 90%;
+}

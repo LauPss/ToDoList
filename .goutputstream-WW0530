@@ -1,0 +1,33 @@
+/* COLOUR PALETTE  #e5c2c0 #8fd5a6 #329f5b #0c8346 #0d5d56 */
+
+body {
+	background-image: linear-gradient(to bottom right, #0c8346, #0d5d56);
+}
+
+div {
+	border: 1px solid red;
+	display: flex;
+	min-height: 90vh;
+}
+
+ul {
+	border: 1px solid blue;
+	border-radius: 0% 3%;
+	display: inline-flex;
+	flex-direction: column;
+	margin: 0 auto;
+	padding: 5px;
+	width: 30%;
+}
+
+li {
+	border: 1px dotted yellow;
+	border-radius: 0% 2%;
+	display: inline-flex;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+
+p {
+	margin: 0;
+}
