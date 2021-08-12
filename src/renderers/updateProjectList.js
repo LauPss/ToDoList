@@ -35,7 +35,8 @@ export default function UpdateProjectList (list) {
 			
 			projectContainer.classList.add("selected");
 			listContainer.remove();
-			ListRenderer(project.tasks);
+			ListRenderer(project.tasks, list);
+			StoreProjectList(list);
 		});
 		
 		deleteBtn.addEventListener("click", (e) => {

@@ -1,6 +1,6 @@
 import TaskFormRenderer from "./taskFormRenderer.js";
 
-export default function NewTaskRenderer (list) {
+export default function NewTaskRenderer (list, projList) {
 	const listContainer = document.getElementById("listContainer");
 	const newTaskContainer = document.createElement("li");
 	const displayButton = document.createElement("button");
@@ -18,14 +18,16 @@ export default function NewTaskRenderer (list) {
 	newTaskContainer.appendChild(displayButton);
 	listContainer.appendChild(newTaskContainer);
 	
-	TaskFormRenderer(list);
+	TaskFormRenderer(list, projList);
 	
 	const displayController = () => {
 		if (newTaskContainer.classList.contains("hideForm") === false) {
 			const formContainer = document.getElementById("formContainer");
+			const btnContainer = document.getElementById("btnContainer");
 				
 			displayButton.classList.add("hidden");
 			formContainer.classList.remove("hidden");
+			btnContainer.classList.remove("hidden");
 		}
 	}	
 	displayController();

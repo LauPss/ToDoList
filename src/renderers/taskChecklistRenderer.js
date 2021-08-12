@@ -1,4 +1,6 @@
-export default function TaskChecklistRenderer (TaskObject, index) {
+import StoreProjectList from "../components/storeProjectList.js";
+
+export default function TaskChecklistRenderer (TaskObject, index, projList) {
 	const checklistItems = TaskObject.checklist;
 	const taskContainer = document.getElementById(index);
 	
@@ -13,15 +15,28 @@ export default function TaskChecklistRenderer (TaskObject, index) {
 			const itemText = document.createElement("p");
 			
 			checklistContainer.classList.add("checklist");
+			checkbox.classList.add("checklistCheckbox");
 			checkbox.type = "checkbox";
-			itemText.innerText = item;
+			itemText.innerText = item.item;
+			
+			if (item.completion === true) {
+				checkbox.checked = true;
+				listItem.classList.add("completedCheck");
+			}
 			
 			checklistContainer.appendChild(listItem);
 			listItem.appendChild(checkbox);
 			listItem.appendChild(itemText);
 			
 			checkbox.addEventListener("change", (e) => {
-				listItem.classList.toggle("completedCheck");
+				if (checkbox.checked === true) {
+					item.completion = true;
+					listItem.classList.add("completedCheck");
+				} else {
+					item.completion = false;
+					listItem.classList.remove("completedCheck");
+				}
+				StoreProjectList(projList);
 			});
 		});
 	}

@@ -1,8 +1,11 @@
+import StoreProjectList from "./storeProjectList.js";
+import ChecklistObject from "./checklistObject.js";
 import ListCleaner from "../renderers/listCleaner.js";
 import TaskRenderer from "../renderers/taskRenderer.js";
 
-export default function EditTask(list, i) {
+export default function EditTask(projList, list, i) {
 	const taskContainer = document.getElementById(i);
+	const btnContainer = document.createElement("div");
 	const labelTitle = document.createElement("label");
 	const labelDescr = document.createElement("label");
 	const labelDate = document.createElement("label");
@@ -28,8 +31,25 @@ export default function EditTask(list, i) {
 	labelPriority.innerText = "Priority:";
 	labelNotes.innerText = "Notes:";
 	addLiButton.innerText = "Add Checklist Item";
-	updateButton.innerText = "Save Changes";
+	updateButton.innerText = "Update Changes and Close";
 	backButton.innerText = "Back";
+	
+	labelTitle.classList.add("editElements");
+	labelDescr.classList.add("editElements");
+	labelNotes.classList.add("editElements");
+	labelPriority.classList.add("editElements");
+	labelDate.classList.add("editElements");
+	
+	labelTitle.id = "editTitle";
+	labelDescr.id = "editDescr";
+	labelNotes.id = "editNotes";
+	labelPriority.id = "editPriority";
+	labelDate.id = "editDate";
+	addLiButton.id = "editAddItem";
+	checklistOl.id = "editClContainer";
+	btnContainer.id = "editBtnContainer";
+	updateButton.id = "editUpdate";
+	backButton.id = "editBack";
 	
 	inputTitle.value = list[i].title;
 	inputDescr.value = list[i].description;
@@ -45,6 +65,9 @@ export default function EditTask(list, i) {
 		priorityLevelLabel.name = "priority";
 		priorityInput.name = "priority";
 		
+		priorityLevelLabel.classList.add("editPrLevel");
+		priorityInput.classList.add("editPrLevel");
+		
 		priorityLevelLabel.innerText = priority;
 		priorityInput.type = "radio";
 		priorityInput.value = priority;
@@ -59,26 +82,35 @@ export default function EditTask(list, i) {
 
 	taskContainer.appendChild(labelTitle);
 	taskContainer.appendChild(labelDescr);
-	taskContainer.appendChild(labelDate);
-	taskContainer.appendChild(labelPriority);
 	taskContainer.appendChild(labelNotes);
+	taskContainer.appendChild(labelPriority);
+	taskContainer.appendChild(labelDate);
 	labelTitle.appendChild(inputTitle);
 	labelDescr.appendChild(inputDescr);
 	labelDate.appendChild(inputDate);
 	labelNotes.appendChild(inputNotes);
+	taskContainer.appendChild(addLiButton);
 	taskContainer.appendChild(checklistOl);
-	checklistOl.appendChild(addLiButton);
-	taskContainer.appendChild(updateButton);
-	taskContainer.appendChild(backButton);
+	btnContainer.appendChild(updateButton)
+	btnContainer.appendChild(backButton);
+	taskContainer.appendChild(btnContainer);
 	
 	addLiButton.addEventListener("click", (e) => {
 		const listItem = document.createElement("li");
 		const input = document.createElement("input");
+		const delBtn = document.createElement("button");
 		
+		delBtn.innerText = "X";
+		delBtn.classList.add("editDeleteItem");
 		input.classList.add("editChecklistItems");
 		
 		checklistOl.appendChild(listItem);
 		listItem.appendChild(input);
+		listItem.appendChild(delBtn);
+		
+		delBtn.addEventListener("click", (e) => {
+			listItem.remove();
+		});
 	});
 	
 	if (list[i].checklist.length > 0) {
@@ -86,18 +118,28 @@ export default function EditTask(list, i) {
 		checklist.forEach(item => {
 			const listItem = document.createElement("li");
 			const input = document.createElement("input");
+			const delBtn = document.createElement("button");
+		
+			delBtn.innerText = "X";
+			delBtn.classList.add("editDeleteItem");
 			
 			input.classList.add("editChecklistItems");
-			input.value = item;
+			input.dataset.status = item.completion;
+			input.value = item.item;
 			
 			checklistOl.appendChild(listItem);
 			listItem.appendChild(input);
+			listItem.appendChild(delBtn);
+		
+			delBtn.addEventListener("click", (e) => {
+				listItem.remove();
+			});
 		});
 	}
 	
 	backButton.addEventListener("click", (e) => {
 		ListCleaner();
-		TaskRenderer(list);
+		TaskRenderer(list, projList);
 	});
 	
 	updateButton.addEventListener("click", (e) => {
@@ -109,7 +151,16 @@ export default function EditTask(list, i) {
 			checklistItems.forEach(item => {
 				if (item.value !== "") {
 					const val = item.value;
-					checklist.push(val);
+					let isComplete = "";
+					
+					if (item.dataset.status === "true") {
+						isComplete = true;
+					} else {
+						isComplete = false;
+					}
+					
+					const newItem = ChecklistObject(val, isComplete);
+					checklist.push(newItem);
 				}
 			});
 		}
@@ -121,7 +172,8 @@ export default function EditTask(list, i) {
 		list[i].notes = inputNotes.value;
 		list[i].checklist = checklist;
 		
+		StoreProjectList(projList);
 		ListCleaner();
-		TaskRenderer(list);
+		TaskRenderer(list, projList);
 	});
 }

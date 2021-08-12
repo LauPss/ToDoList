@@ -1,7 +1,7 @@
 import TaskRenderer from "./taskRenderer.js";
 import NewTaskRenderer from "./newTaskRenderer.js";
 
-export default function ListRenderer (list) {
+export default function ListRenderer (list, projList) {
 	const content = document.getElementById("content");
 	const container = document.createElement("ul");
 	const header = document.createElement("li");
@@ -13,7 +13,7 @@ export default function ListRenderer (list) {
 	header.innerHTML = "<h2>TASKS</h2>";
 	container.appendChild(header);
 	
-	NewTaskRenderer(list);
+	NewTaskRenderer(list, projList);
 	
-	TaskRenderer(list);
+	TaskRenderer(list, projList);
 }

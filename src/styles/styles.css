@@ -1,11 +1,26 @@
 /* COLOUR PALETTE  #e5c2c0 #8fd5a6 #329f5b #0c8346 #0d5d56 */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 body {
-	background-image: linear-gradient(to bottom right, #0c8346, #0d5d56);
+	background-color: #3A9C5B;
 	color: white;
-	font-family: 'DM Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+}
+
+h1 {
+	background-color: #0a3a56;
+	margin-top: 0;
+	padding: 15px 15px;
+	text-shadow: 1px 1px 1px darkgreen;
+}
+
+button {
+	border: 1px solid transparent;
+	color: white;
+	font-family: "Open Sans", sans-serif;
+	text-shadow: 1px 1px 1px darkgreen;
 }
 
 div#content, nav#navBar {
@@ -15,6 +30,7 @@ div#content, nav#navBar {
 
 nav#navBar {
 	width: 25%;
+	margin-left: 15px;
 }
 
 #navBar > ul {
@@ -23,15 +39,12 @@ nav#navBar {
 
 ul {
 	background-color: #0d5d56;
-	box-shadow: 14px 10px 116px 0px rgba(255,255,255,0.75);
-	-webkit-box-shadow: 14px 10px 116px 0px rgba(255,255,255,0.75);
-	-moz-box-shadow: 14px 10px 116px 0px rgba(255,255,255,0.75);
 	border-radius: 0% 3%;
 	display: inline-flex;
 	flex-direction: column;
 	margin: 0 auto;
 	padding: 5px;
-	width: 40%;
+	width: 50%;
 }
 
 li.hideForm {
@@ -86,12 +99,11 @@ h2 {
 	margin: 0 auto;
 }
 
-li#listHeader {
+li#listHeader, #projHeader {
 	background-image: none;
-	font-size: 8pt;
-	letter-spacing: 6px;
+	letter-spacing: 3px;
 	list-style-type: none;
-	margin: 0 0 5px 0;
+	margin: 0 auto 5px;
 	padding: 0;
 	text-shadow: 1px 1px 1px #222222;
 }
@@ -119,11 +131,17 @@ div#taskHeader > label, li.projContainer > h3 {
 	width: 87%;
 }
 
+div#taskHeader > label:hover, li.projContainer > h3:hover {
+	text-decoration: underline;
+}
+
 span#dueDate {
 	font-weight: bold;
-	font-size: 11pt;
+	font-size: 8pt;
 	line-height: 20pt;
-	margin-right: 7px;
+	margin-right: 10px;
+	text-align: right;
+	width: 100px;
 }
 
 button#moreButton {
@@ -164,13 +182,17 @@ li.high > div#taskHeader {
 	display: none;
 }
 
-#delTaskButton, #moreButton, button.delProjBtn {
+.completedTask #dueDate, .completedTask #editButton, .completedTask #moreButton, .completedTask #delTaskButton {
+	text-decoration-line: none !important;
+}
+
+#delTaskButton, #editButton, #moreButton, button.delProjBtn, button.delChecklistItem, button.editDeleteItem {
 	background-color: transparent;
 	border-style: none;
 	color: white;
+	cursor: pointer;
 	font-size: 11pt;
 	font-weight: bold;
-	text-decoration-color: transparent;
 	width: 5%;
 }
 
@@ -190,33 +212,73 @@ li.high > div#taskHeader {
 	flex-direction: column;
 }
 
-label.newTaskElements {
+label.newTaskElements, label.editElements, label.newProjElements:not(.hidden) {
+	display: flex;
 	font-size: 10pt;
 	font-weight: 400;
 	margin: 3px;
 	text-transform: capitalize;
 }
 
-input.newTaskElements {
+input.newTaskElements, .editElements input, #inputProjTitle {
+	flex-grow: 1;
 	margin-left: 15px;
+	margin-right: 10px;
 }
 
-label.newTaskPriorities {
+label.newTaskPriorities, label.editPrLevel {
 	display: inline;
 	font-size: 8px;
-	margin-left: 15px;
+	margin-left: 70px;
+	width: 90px;
 }
 
-input.newTaskPriorities {
-	margin-left: 2px;
+input.newTaskPriorities, input.editPrLevel {
+	margin-left: 5px;
 }
 
-#addBtn {
+#inputduedate, #editDate input {
+	flex-grow: 0;
+	width: 150px;
+}
+
+button.addItem, #editAddItem {
+	background-color: #22bb33;
+	border-radius: 0 10px;
+	-webkit-box-shadow: 0px 0px 2px 0px #0d5d56;
+	-moz-box-shadow: 0px 0px 2px 0px #0d5d56;
+	-o-box-shadow: 0px 0px 2px 0px #0d5d56;
+	box-shadow: 0px 0px 2px 0px #0d5d56;
+	margin: 7px auto;
+}
+
+#btnContainer:not(.hidden), #editBtnContainer, #projBtnContainer:not(.hidden) {
+	display: flex;
+	justify-content: center;
+}
+
+#addBtn, #editUpdate, #confirmAddProj {
+	background-color: #22bb33;
+	border-radius: 0 0 0 10px;
 	width: 50%;
 }
 
-#cancelBtn {
+#cancelBtn, #editBack, #cancelAddProj {
+	background-color: #0c8346;
+	border-radius: 0 10px 0 0;
 	width: 20%;
+}
+
+#addBtn, #cancelBtn, #editUpdate, #editBack, #confirmAddProj, #cancelAddProj {
+	-webkit-box-shadow: 0px 0px 2px 0px #0d5d56;
+	-moz-box-shadow: 0px 0px 2px 0px #0d5d56;
+	-o-box-shadow: 0px 0px 2px 0px #0d5d56;
+	box-shadow: 0px 0px 2px 0px #0d5d56;
+	height: 25px;
+}
+
+#addBtn:hover, #cancelBtn:hover, .addItem:hover, #editAddItem:hover, #editBack:hover, #editUpdate:hover, #confirmAddProj:hover, #cancelAddProj:hover {
+	border: 1px solid #88ff88;
 }
 
 button#openFormBtn, button#openProjForm {
@@ -228,10 +290,19 @@ button#openFormBtn, button#openProjForm {
 	text-shadow: 1px 1px 1px #333333;
 }
 
-#formChecklistContainer {
+#formChecklistContainer, #editClContainer {
 	border: none;
+	margin-bottom: 20px;
 }
 
-#formChecklistContainer	li > input {
+#formChecklistContainer	li > input, #editClContainer li > input {
 	width: 90%;
+}
+
+button.delChecklistItem {
+	font-weight: regular !important;
+}
+
+label.newProjElements:not(.hidden) {
+	margin-bottom: 10px;
 }

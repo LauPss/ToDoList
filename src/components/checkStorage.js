@@ -18,5 +18,5 @@ export default function CheckStorage () {
 	const firstTaskList = projectList[0].tasks;
 	
 	firstProjectLi.classList.add("selected");
-	ListRenderer(firstTaskList);
+	ListRenderer(firstTaskList, projectList);
 }

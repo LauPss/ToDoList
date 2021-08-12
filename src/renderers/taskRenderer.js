@@ -1,10 +1,14 @@
 import EditTask from "../components/editTask.js";
+import { format } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
+import { parseISO } from 'date-fns';
 import ShowDetails from "../components/showDetails.js";
+import StoreProjectList from "../components/storeProjectList.js";
 import TaskChecklistRenderer from "./taskChecklistRenderer.js";
 import TaskObject from "../components/taskObject.js";
 import TaskEraser from "../components/taskEraser.js";
 
-export default function TaskRenderer (list) {
+export default function TaskRenderer (list, projList) {
 	list.forEach((TaskObject, index) => {
 		const listContainer = document.getElementById("listContainer");
 		const taskHeader = document.createElement("div");
@@ -26,24 +30,37 @@ export default function TaskRenderer (list) {
 		checkbox.classList.add("taskCheckbox");
 		checkbox.name = TaskObject.title;
 		checkbox.type = "checkbox";
+		
+		if (TaskObject.completion === true) {
+			checkbox.checked = true;
+			container.classList.add("completedTask");
+		}
+		
 		checkbox.addEventListener("change", (e) => {
-			if (checkbox.checked) {
+			if (checkbox.checked === true) {
+				TaskObject.completion = true;
 				container.classList.add("completedTask");
 			} else {
+				TaskObject.completion = false;
 				container.classList.remove("completedTask");
 			}
+			StoreProjectList(projList);
 		});
 		
 		label.setAttribute("for", checkbox.id);
 		label.innerText = checkbox.id;
 		
 		dueDate.id = "dueDate";
-		dueDate.innerText = TaskObject.dueDate;
+		const parsedDate = parseISO(TaskObject.dueDate);
+		dueDate.innerText = formatDistanceToNow(
+			parsedDate, 
+			{addSuffix: true}
+		);
 		
 		editButton.id = "editButton";
-		editButton.innerText = "Edit";
+		editButton.innerText = "📝";
 		editButton.addEventListener("click", (e) => {
-			EditTask(list, index);
+			EditTask(projList, list, index);
 		});
 		
 		moreButton.id = "moreButton";
@@ -54,6 +71,7 @@ export default function TaskRenderer (list) {
 		delButton.innerText = "X";
 		delButton.addEventListener("click", (e) => {
 			TaskEraser(list, index);
+			StoreProjectList(projList);
 		});
 		
 		taskHeader.appendChild(checkbox);
@@ -64,7 +82,8 @@ export default function TaskRenderer (list) {
 		taskHeader.appendChild(delButton);
 		container.appendChild(taskHeader);
 		
-		const textArray = [TaskObject.description, TaskObject.notes];
+		const dateString = "Due date: " + format(parsedDate, "PPPP") + ".";
+		const textArray = [dateString, TaskObject.description, TaskObject.notes];
 		textArray.forEach(value => {
 			const valueParag = document.createElement("p");
 			valueParag.innerText = value;
@@ -86,7 +105,7 @@ export default function TaskRenderer (list) {
 		
 		listContainer.appendChild(container);
 		
-		TaskChecklistRenderer(TaskObject, index);
+		TaskChecklistRenderer(TaskObject, index, projList);
 		
 		moreButton.addEventListener("click", (e) => {
 			ShowDetails(index);

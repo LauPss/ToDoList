@@ -14,5 +14,5 @@ export default function DisplayFirstProject (list) {
 	
 	firstProjectLi.classList.add("selected");
 	listContainer.remove();
-	ListRenderer(firstProject.tasks);
+	ListRenderer(firstProject.tasks, list);
 }

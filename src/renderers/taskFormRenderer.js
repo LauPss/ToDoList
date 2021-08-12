@@ -1,15 +1,19 @@
 import FormChecklistRenderer from "./formChecklistRenderer.js";
 import StoreNewTask from "../components/storeNewTask.js";
 
-export default function TaskFormRenderer (list) {
+export default function TaskFormRenderer (list, projList) {
 	const newTaskContainer = document.getElementById("newTaskContainer");
-	const formContainer = document.createElement("div");
 	const displayBtn = document.getElementById("openFormBtn");
+	const formContainer = document.createElement("div");
+	const btnContainer = document.createElement("div");
 	
 	formContainer.classList.add("hidden");
+	btnContainer.classList.add("hidden");
 	formContainer.id = "formContainer";
+	btnContainer.id = "btnContainer";
 	
 	newTaskContainer.appendChild(formContainer);
+	newTaskContainer.appendChild(btnContainer);
 	
 	const TextProperties = ["title", "description", "notes"];
 	TextProperties.forEach(property => {
@@ -70,44 +74,32 @@ export default function TaskFormRenderer (list) {
 	dueDateLabel.appendChild(dueDateInput);
 	formContainer.appendChild(dueDateLabel);
 	
-	const checklistContainer = document.createElement("ol");
-	const checklistFlagLabel = document.createElement("label");
-	const checklistFlag = document.createElement("input");
-	
-	checklistFlagLabel.classList.add("newTaskElements");
-	checklistFlag.classList.add("newTaskElements");
-	checklistFlag.id = "isChecklistFlag";
-	checklistContainer.id = "formChecklistContainer";
-	
-	checklistFlagLabel.innerText = "Is it a checklist?";
-	checklistFlag.type = "checkbox";
-	
-	checklistFlagLabel.appendChild(checklistFlag);
-	formContainer.appendChild(checklistFlagLabel);
-	formContainer.appendChild(checklistContainer);
-	
-	checklistFlag.addEventListener("change", (e) => {
-		FormChecklistRenderer();
-	});
+	FormChecklistRenderer();
 	
 	const addBtn = document.createElement("button");
 	addBtn.innerText = "Add Task and Close";
 	addBtn.id = "addBtn";
-	formContainer.appendChild(addBtn);
+	btnContainer.appendChild(addBtn);
 	addBtn.addEventListener("click", (e) => {
-		StoreNewTask(list);
-		displayBtn.classList.remove("hidden");
-		formContainer.classList.add("hidden");
-		newTaskContainer.classList.add("hideForm");
+		const inputTitle = document.getElementById("inputtitle");
+		
+		if (inputTitle.value.length > 0) {
+			displayBtn.classList.remove("hidden");
+			formContainer.classList.add("hidden");
+			btnContainer.classList.add("hidden");
+			newTaskContainer.classList.add("hideForm");
+			StoreNewTask(list, projList);
+		}
 	});
 	
 	const cancelBtn = document.createElement("button");
 	cancelBtn.innerText = "Cancel";
 	cancelBtn.id = "cancelBtn";
-	formContainer.appendChild(cancelBtn);
+	btnContainer.appendChild(cancelBtn);
 	cancelBtn.addEventListener("click", (e) => {
 		displayBtn.classList.remove("hidden");
 		formContainer.classList.add("hidden");
+		btnContainer.classList.add("hidden");
 		newTaskContainer.classList.add("hideForm");
 	});
 	

@@ -1,8 +1,10 @@
+import ChecklistObject from "./checklistObject.js";
+import ListCleaner from "../renderers/listCleaner.js";
+import StoreProjectList from "../components/storeProjectList.js";
 import TaskObject from "./taskObject.js";
 import TaskRenderer from "../renderers/taskRenderer.js";
-import ListCleaner from "../renderers/listCleaner.js";
 
-export default function StoreNewTask (list) {
+export default function StoreNewTask (list, projList) {
 	const addBtn = document.getElementById("addBtn");
 	const inputTitle = document.getElementById("inputtitle");
 	const inputDescription = document.getElementById("inputdescription");
@@ -10,14 +12,16 @@ export default function StoreNewTask (list) {
 	const inputPriority = document.querySelector("input[name=priority]:checked");
 	const inputNotes = document.getElementById("inputnotes");
 	const checklistContainer = document.getElementById("formChecklistContainer");
-	const checklistFlag = document.getElementById("isChecklistFlag");
 	const checklistItems = document.querySelectorAll(".formChecklistItem");
 	
 	const checklist = [];
 	if (checklistItems.length > 0) {
 		checklistItems.forEach(item => {
-			const val = item.value;
-			checklist.push(val);
+			if (item.value !== 0) {
+				const val = item.value;
+				const newItem = ChecklistObject(val, false);
+				checklist.push(newItem);
+			}
 		});
 	}
 	
@@ -25,8 +29,7 @@ export default function StoreNewTask (list) {
 		const defaultPriority = document.querySelector("input[name=priority][value=low]");
 		
 		defaultPriority.checked = true;
-		checklistFlag.checked = false;
-		
+
 		inputTitle.value = ""; 
 		inputDescription.value = "";
 		inputDueDate.value = ""; 
@@ -37,11 +40,11 @@ export default function StoreNewTask (list) {
 	}
 	
 	if (inputTitle.value.length > 0) {
-		const newTask = TaskObject(inputTitle.value, inputDescription.value, inputDueDate.value, inputPriority.value, inputNotes.value, checklist);
+		const newTask = TaskObject(inputTitle.value, inputDescription.value, inputDueDate.value, inputPriority.value, inputNotes.value, checklist, false);
 		list.push(newTask);
+		StoreProjectList(projList);
 		ListCleaner();
 		TaskRenderer(list);
 		clearAll();
 	}
-	
 }
